@@ -1,10 +1,13 @@
 import logo from './logo.svg';
 import { Navbar, NavbarBrand } from "reactstrap";
-
 import Menu from "./components/Menu"
 import './App.css';
+import DISHES from "./shared/dishes";
+import { useState } from 'react';
 
-function App() {
+function App(props) {
+	const [dishes, changeDished] = useState(DISHES);
+
 	return (
 		<div>
 
@@ -14,7 +17,8 @@ function App() {
 				</div>
 			</Navbar>
 
-			<Menu />
+			<Menu dishz={dishes} />
+			
 		</div>
 	);
 }
