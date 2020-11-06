@@ -33,7 +33,11 @@ function DishDetail(props) {
                             return (
                                 <div key={i}>
                                     <li>{cmnt.comment}</li>
-                                    <li>{"-- " + cmnt.author + " , " + cmnt.date}</li>
+                                    <li>-- {cmnt.author} , {new Intl.DateTimeFormat("en-US", {
+                                        year: "numeric",
+                                        month: "short",
+                                        day: "2-digit"
+                                    }).format(new Date(Date.parse(cmnt.date)))}</li>
                                     <br></br>
                                 </div>);
                         })}
@@ -44,12 +48,14 @@ function DishDetail(props) {
     }
 
     return (
-        <div className="row">
-            <div className="col-12 col-md-5 m-1">
-                {DishdetailComponent(dish)}
-            </div>
-            <div className="col-12 col-md-5 m-1">
-                {renderComments(dish)}
+        <div className="container">
+            <div className="row">
+                <div className="col-12 col-md-5 m-1">
+                    {DishdetailComponent(dish)}
+                </div>
+                <div className="col-12 col-md-5 m-1">
+                    {renderComments(dish)}
+                </div>
             </div>
         </div>
     );
