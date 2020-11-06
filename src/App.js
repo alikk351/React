@@ -1,7 +1,6 @@
 import logo from './logo.svg';
 import { Navbar, NavbarBrand } from "reactstrap";
 import Menu from "./components/Menu"
-import './App.css';
 import DISHES from "./shared/dishes";
 import { useState } from 'react';
 
