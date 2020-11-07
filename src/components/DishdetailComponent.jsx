@@ -4,6 +4,10 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from "re
 function DishDetail(props) {
     const dish = props.a_dish;
 
+    React.useEffect(() => {
+        console.log("DishDetail invoked");
+    });
+
     function DishdetailComponent(any_dish) {   // use it in MERN-auth to display a modal of a post
         if (any_dish === null) {
             return (<div></div>);
@@ -21,6 +25,7 @@ function DishDetail(props) {
     }
 
     function renderComments(any_dish) {
+        console.log("Render invoked");
         if (any_dish === null) {
             return (<div></div>);
         } else {
@@ -39,7 +44,8 @@ function DishDetail(props) {
                                         day: "2-digit"
                                     }).format(new Date(Date.parse(cmnt.date)))}</li>
                                     <br></br>
-                                </div>);
+                                </div>
+                            );
                         })}
                     </ul>
                 </div>
@@ -48,7 +54,7 @@ function DishDetail(props) {
     }
 
     return (
-        <div className="container">
+        < div className="container" >
             <div className="row">
                 <div className="col-12 col-md-5 m-1">
                     {DishdetailComponent(dish)}
@@ -57,7 +63,7 @@ function DishDetail(props) {
                     {renderComments(dish)}
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
