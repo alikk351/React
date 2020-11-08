@@ -6,6 +6,7 @@ import Header from "./Header";
 import Footer from "./Footer";
 import Home from "./Home";
 import Contact from "./Contact";
+import About from "./About";
 import { COMMENTS } from "./../shared/comments";
 import { LEADERS } from "./../shared/leaders";
 import { PROMOTIONS } from "./../shared/promotions";
@@ -51,6 +52,8 @@ function Main(props) {
                 <Route path="/menu/:dishId" component={DishWithId} />
 
                 <Route path="/contactus" component={Contact} />
+
+                <Route path="/aboutus" component={() => <About leaders={leaders} />} />
 
                 <Redirect to="/home" /> {/* for default route redirect to home ===> should be last*/}
 
