@@ -1,8 +1,10 @@
 import React from "react";
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from "reactstrap";
+import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from "reactstrap";
+import { Link } from "react-router-dom";
 
 function DishDetail(props) {
     const dish = props.a_dish;
+    const comments = props.cmnts;
 
     React.useEffect(() => {
         console.log("DishDetail invoked");
@@ -24,9 +26,9 @@ function DishDetail(props) {
         }
     }
 
-    function renderComments(any_dish) {
+    function renderComments(c) {
         console.log("Render invoked");
-        if (any_dish === null) {
+        if (c === null) {
             return (<div></div>);
         } else {
             return (
@@ -34,7 +36,7 @@ function DishDetail(props) {
                     <h5>Comments</h5>
                     <br></br>
                     <ul className="list-unstyled">
-                        {any_dish.comments.map((cmnt, i) => {
+                        {c.map((cmnt, i) => {
                             return (
                                 <div key={i}>
                                     <li>{cmnt.comment}</li>
@@ -54,16 +56,26 @@ function DishDetail(props) {
     }
 
     return (
-        < div className="container" >
+        <div className="container">
+            <div className="row">
+                <Breadcrumb>
+                    <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+                    <BreadcrumbItem active>{dish.name}</BreadcrumbItem>
+                </Breadcrumb>
+                <div className="col-12">
+                    <h3>{dish.name}</h3>
+                    <hr></hr>
+                </div>
+            </div>
             <div className="row">
                 <div className="col-12 col-md-5 m-1">
                     {DishdetailComponent(dish)}
                 </div>
                 <div className="col-12 col-md-5 m-1">
-                    {renderComments(dish)}
+                    {renderComments(comments)}
                 </div>
             </div>
-        </div >
+        </div>
     );
 }
 

@@ -27,6 +27,15 @@ function Main(props) {
         );
     }
 
+    const DishWithId = ({ match }) => {
+        return (
+            <DishDetail
+                a_dish={dishes.filter(dish => dish.id === parseInt(match.params.dishId, 10))[0]}
+                cmnts={comments.filter(comment => comment.dishId === parseInt(match.params.dishId, 10))}
+            /> //base 10 int
+        );
+    }
+
     return (
         <div>
 
@@ -39,9 +48,11 @@ function Main(props) {
                 <Route exact path="/menu" component={() => <Menu dishz={dishes} />} />
                 {/* exact cuz we will use '/menu/shi' for dish details */}
 
+                <Route path="/menu/:dishId" component={DishWithId} />
+
                 <Route path="/contactus" component={Contact} />
 
-                <Redirect to="/home" /> {/* for default route redirect to home === should be last*/}
+                <Redirect to="/home" /> {/* for default route redirect to home ===> should be last*/}
 
             </Switch>
 

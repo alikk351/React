@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardImg, CardBody, CardText, CardTitle, CardSubtitle } from "reactstrap";
 
-function RenderCard({ item }) {
+function RenderCard({ item }) { // or just props but down use props.item.shi
 
     return (
         <Card>
