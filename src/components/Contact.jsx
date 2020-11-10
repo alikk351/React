@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col } from "reactstrap";
+import { Breadcrumb, BreadcrumbItem, Button, Form, FormGroup, Label, Input, Col, FormFeedback } from "reactstrap";
 
 function Contact(props) {
     const [contact, setContact] = React.useState({
@@ -25,15 +25,7 @@ function Contact(props) {
     }
 
     function handleSubmit(event) {
-        setContact({
-            firstname: "",
-            lastname: "",
-            telnum: "",
-            email: "",
-            agree: false,
-            contactType: "Tel.",
-            message: ""
-        })
+        setContact({ firstname: "", lastname: "", telnum: "", email: "", agree: false, contactType: "Tel.", message: "" });
         event.preventDefault();
     }
 
@@ -85,28 +77,28 @@ function Contact(props) {
                             <Label htmlFor="firstname" md={2}>First Name</Label>
                             <Col md={10}>
                                 <Input type="text" id="firstname" name="firstname" placeholder="First Name"
-                                    value={contact.firstname} onChange={handleInputChange} />
+                                    value={contact.firstname} onChange={handleInputChange} required />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
                             <Label htmlFor="lastname" md={2}>Last Name</Label>
                             <Col md={10}>
                                 <Input type="text" id="lastname" name="lastname" placeholder="Last Name"
-                                    value={contact.lastname} onChange={handleInputChange} />
+                                    value={contact.lastname} onChange={handleInputChange} required />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
                             <Label htmlFor="telnum" md={2}>Contact Tel.</Label>
                             <Col md={10}>
                                 <Input type="tel" id="telnum" name="telnum" placeholder="Phone Number"
-                                    value={contact.telnum} onChange={handleInputChange} />
+                                    value={contact.telnum} onChange={handleInputChange} required />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
                             <Label htmlFor="email" md={2}>Email</Label>
                             <Col md={10}>
                                 <Input type="email" id="email" name="email" placeholder="Email"
-                                    value={contact.email} onChange={handleInputChange} />
+                                    value={contact.email} onChange={handleInputChange} required />
                             </Col>
                         </FormGroup>
                         <FormGroup row>
@@ -114,7 +106,7 @@ function Contact(props) {
                                 <FormGroup check>
                                     <Label check>
                                         <Input type="checkbox" name="agree" checked={contact.agree}
-                                            onChange={handleInputChange} /> {" "}
+                                            onChange={handleInputChange} required /> {" "}
                                         <strong>May we contact you ?</strong>
                                     </Label>
                                 </FormGroup>
