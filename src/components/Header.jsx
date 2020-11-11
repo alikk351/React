@@ -25,7 +25,7 @@ function Header() {
                         <img src="assets/images/logo.png" alt="logo" height="30" width="41" />
                     </NavbarBrand>
                     <Collapse navbar isOpen={isNavOpen} > {/* to collapse for smaller */}
-                        <Nav navbar className="ml-3">
+                        <Nav navbar className="ml-3 mr-3">
                             <NavItem >
                                 <NavLink className="nav-link" to="/home">
                                     <span className="fa fa-home fa-lg"></span> Home
