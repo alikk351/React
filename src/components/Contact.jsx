@@ -10,11 +10,9 @@ const isNumber = (val) => !isNaN(Number(val));
 const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val); //constant for email validation
 
 function Contact(props) {
-
     function handleSubmit(values) {
         console.log(values);
     }
-
 
     return (
         <div className="container">

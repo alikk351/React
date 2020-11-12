@@ -1,6 +1,58 @@
 import React from "react";
-import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from "reactstrap";
+import {
+    Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle, Breadcrumb,
+    ModalHeader, BreadcrumbItem, Button, Modal, ModalBody, Label
+} from "reactstrap";
 import { Link } from "react-router-dom";
+import { Control, LocalForm, Errors } from "react-redux-form";
+
+const required = (val) => val && val.length;
+const maxLength = (len) => (val) => !(val) || (val.length <= len);
+const minLength = (len) => (val) => val && (val.length >= len);
+
+function CommentForm() {
+    const [modalOpen, setModal] = React.useState(false);
+
+    return (
+        <div>
+            <Button className="btn-lg" color="secondary" outline
+                onClick={() => setModal(true)}><span className="fa fa-pencil fa-lg"> </span>&nbsp; Submit Comment</Button>
+
+            <Modal isOpen={modalOpen} toggle={() => setModal(!modalOpen)}>
+                <ModalHeader toggle={() => setModal(!modalOpen)}>Submit Comment</ModalHeader>
+                <ModalBody>
+                    <LocalForm onSubmit={values => { alert(JSON.stringify(values)); setModal(false); }}>
+                        <div className="form-group">
+                            <Label htmlFor="rating" tag="h6">Rating</Label>
+                            <Control.select model=".rating" className="form-control" name="rating">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </Control.select>
+                        </div>
+                        <div className="form-group">
+                            <Label htmlFor="name" tag="h6">Your Name</Label>
+                            <Control.text model=".name" name="name" className="form-control" placeholder="Your Name"
+                                validators={{ required, minLength: minLength(3), maxLength: maxLength(15) }} />
+                            <Errors show="touched" model=".name" className="text-danger" messages={{
+                                required: "Required\n",
+                                minLength: "Must be greater than 2 characters\n",
+                                maxLength: "Must be 15 characters or less\n"
+                            }} />
+                        </div>
+                        <div className="form-group">
+                            <Label htmlFor="cmnt" tag="h6">Comment</Label>
+                            <Control.textarea model=".cmnt" name="cmnt" className="form-control" rows="6" />
+                        </div>
+                        <Button color="primary">Submit</Button>
+                    </LocalForm>
+                </ModalBody>
+            </Modal>
+        </div>
+    );
+}
 
 function DishDetail(props) {
     const dish = props.a_dish;
@@ -73,6 +125,7 @@ function DishDetail(props) {
                 </div>
                 <div className="col-12 col-md-5 m-1">
                     {renderComments(comments)}
+                    <CommentForm />
                 </div>
             </div>
         </div>
