@@ -10,7 +10,7 @@ const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
 
-function CommentForm() {
+function CommentForm(props) {
     const [modalOpen, setModal] = React.useState(false);
 
     return (
@@ -21,7 +21,10 @@ function CommentForm() {
             <Modal isOpen={modalOpen} toggle={() => setModal(!modalOpen)}>
                 <ModalHeader toggle={() => setModal(!modalOpen)}>Submit Comment</ModalHeader>
                 <ModalBody>
-                    <LocalForm onSubmit={values => { alert(JSON.stringify(values)); setModal(false); }}>
+                    <LocalForm onSubmit={values => {
+                        setModal(false);
+                        props.addComment(props.dishId, values.rating, values.name, values.cmnt);
+                    }}>
                         <div className="form-group">
                             <Label htmlFor="rating" tag="h6">Rating</Label>
                             <Control.select model=".rating" className="form-control" name="rating">
@@ -70,7 +73,7 @@ function DishdetailComponent({ any_dish }) {   // use it in MERN-auth to display
     }
 }
 
-function RenderComments({ c }) {
+function RenderComments({ c, addComment, dishId }) {
     console.log("Render invoked");
     if (c === null) {
         return (<div></div>);
@@ -94,6 +97,7 @@ function RenderComments({ c }) {
                         );
                     })}
                 </ul>
+                <CommentForm dishId={dishId} addComment={addComment} />
             </div>
         );
     }
@@ -125,8 +129,7 @@ function DishDetail(props) {
                     <DishdetailComponent any_dish={props.a_dish} />
                 </div>
                 <div className="col-12 col-md-5 m-1">
-                    <RenderComments c={props.cmnts} />
-                    <CommentForm />
+                    <RenderComments c={props.cmnts} addComment={props.addComment} dishId={props.a_dish.id} />
                 </div>
             </div>
         </div>
