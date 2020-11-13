@@ -6,8 +6,12 @@ import Footer from "./Footer";
 import Home from "./Home";
 import Contact from "./Contact";
 import About from "./About";
+
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
+
 import { connect } from "react-redux"; // to connect comp to the store
+
+import { addComment } from "./../redux/ActionCreators";
 
 const mapStateToProps = state => { // will be available as props for the main comp
     return {
@@ -17,6 +21,10 @@ const mapStateToProps = state => { // will be available as props for the main co
         promotions: state.promotions
     };
 };
+
+const mapDispatchToProps = dispatch => ({
+    addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+});
 
 function Main(props) {  /// all states will be available as props
     const HomePage = () => {
@@ -34,6 +42,7 @@ function Main(props) {  /// all states will be available as props
             <DishDetail
                 a_dish={props.dishes.filter(dish => dish.id === parseInt(match.params.dishId, 10))[0]}
                 cmnts={props.comments.filter(comment => comment.dishId === parseInt(match.params.dishId, 10))}
+                addComment={props.addComment}
             /> //base 10 int
         );
     }
@@ -69,4 +78,4 @@ function Main(props) {  /// all states will be available as props
     );
 }
 
-export default withRouter(connect(mapStateToProps)(Main)); // to connect main to the store
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main)); // to connect main to the store
