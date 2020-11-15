@@ -1,5 +1,5 @@
 import Menu from "./Menu"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import DishDetail from "./DishdetailComponent";
 import Header from "./Header";
 import Footer from "./Footer";
@@ -11,11 +11,11 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
 import { connect } from "react-redux"; // to connect comp to the store
 
-import { addComment } from "./../redux/ActionCreators";
+import { addComment, fetchDishes } from "./../redux/ActionCreators";
 
 const mapStateToProps = state => { // will be available as props for the main comp
     return {
-        dishes: state.dishes,
+        dishes: state.dishes, // this will not only have an array of dishes but 3 different props
         comments: state.comments,
         leaders: state.leaders,
         promotions: state.promotions
@@ -23,14 +23,22 @@ const mapStateToProps = state => { // will be available as props for the main co
 };
 
 const mapDispatchToProps = dispatch => ({
-    addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment))
+    addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
+    fetchDishes: () => { dispatch(fetchDishes()) }
 });
 
 function Main(props) {  /// all states will be available as props
+    useEffect(() => { // directly after screen loaded
+        console.log("hello");
+        props.fetchDishes();
+    },[]);
+
     const HomePage = () => {
         return (
             <Home
-                dish={props.dishes.filter(d => d.featured === true)[0]}  // d for one dish
+                dish={props.dishes.dishes.filter(d => d.featured === true)[0]}  // d for one dish
+                dishesLoading={props.dishes.isLoading}
+                dishesErrMess={props.dishes.errMess}
                 leader={props.leaders.filter(l => l.featured === true)[0]}
                 promotion={props.promotions.filter(promo => promo.featured === true)[0]}
             />
@@ -40,7 +48,9 @@ function Main(props) {  /// all states will be available as props
     const DishWithId = ({ match }) => {
         return (
             <DishDetail
-                a_dish={props.dishes.filter(dish => dish.id === parseInt(match.params.dishId, 10))[0]}
+                a_dish={props.dishes.dishes.filter(dish => dish.id === parseInt(match.params.dishId, 10))[0]}
+                isLoading={props.dishes.isLoading}
+                ErrMess={props.dishes.errMess}
                 cmnts={props.comments.filter(comment => comment.dishId === parseInt(match.params.dishId, 10))}
                 addComment={props.addComment}
             /> //base 10 int
