@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Breadcrumb, BreadcrumbItem, Button, Col, Label, Row } from "reactstrap";
-import { Control, LocalForm, Errors } from "react-redux-form";
+import { Control, actions,Form, Errors } from "react-redux-form";
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -12,6 +12,7 @@ const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val
 function Contact(props) {
     function handleSubmit(values) {
         console.log(values);
+        props.reset();
     }
 
     return (
@@ -58,7 +59,7 @@ function Contact(props) {
                     <br></br>
                 </div>
                 <div className="col-12 col-md-9">
-                    <LocalForm onSubmit={values => handleSubmit(values)}>
+                    <Form model="feedback" onSubmit={values => handleSubmit(values)}>
                         <Row className="form-group">
                             <Label htmlFor="firstname" md={2}>First Name</Label>
                             <Col md={10}>
@@ -181,7 +182,7 @@ function Contact(props) {
                                     </Button>
                             </Col>
                         </Row>
-                    </LocalForm>
+                    </Form>
                 </div>
             </div>
         </div>

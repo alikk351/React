@@ -13,6 +13,8 @@ import { connect } from "react-redux"; // to connect comp to the store
 
 import { addComment, fetchDishes } from "./../redux/ActionCreators";
 
+import { actions } from "react-redux-form";
+
 const mapStateToProps = state => { // will be available as props for the main comp
     return {
         dishes: state.dishes, // this will not only have an array of dishes but 3 different props
@@ -23,15 +25,17 @@ const mapStateToProps = state => { // will be available as props for the main co
 };
 
 const mapDispatchToProps = dispatch => ({
-    addComment: (dishId, rating, author, comment) => dispatch(addComment(dishId, rating, author, comment)),
-    fetchDishes: () => { dispatch(fetchDishes()) }
+    addComment: (dishId, rating, author, comment) => { dispatch(addComment(dishId, rating, author, comment)) },
+    fetchDishes: () => { dispatch(fetchDishes()) },
+    resetFeedbackForm: () => { dispatch(actions.reset("feedback")) } // empties the feedback only on reload or submit
+    // the model will be passed
 });
 
 function Main(props) {  /// all states will be available as props
     useEffect(() => { // directly after screen loaded
         console.log("hello");
         props.fetchDishes();
-    },[]);
+    }, []);
 
     const HomePage = () => {
         return (
@@ -71,7 +75,7 @@ function Main(props) {  /// all states will be available as props
 
                 <Route path="/menu/:dishId" component={DishWithId} />
 
-                <Route path="/contactus" component={Contact} />
+                <Route path="/contactus" component={() => <Contact reset={props.resetFeedbackForm} />} />
 
                 <Route path="/aboutus" component={() => <About leaders={props.leaders} />} />
 
