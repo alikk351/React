@@ -6,6 +6,7 @@ import {
 import { Link } from "react-router-dom";
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Loading } from "./Loding";
+import { baseUrl } from "./../shared/baseUrl";
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -64,7 +65,7 @@ function DishdetailComponent({ any_dish }) {   // use it in MERN-auth to display
     } else {
         return (
             <Card >
-                <CardImg width="100%" src={any_dish.image} alt={any_dish.name} />
+                <CardImg width="100%" src={baseUrl + any_dish.image} alt={any_dish.name} />
                 <CardBody>
                     <CardTitle tag="h5">{any_dish.name}</CardTitle>
                     <CardText>{any_dish.description}</CardText>

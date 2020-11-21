@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem } from "reactstrap";
 import { Link } from "react-router-dom";
 import { Loading } from "./Loding";
+import { baseUrl } from "./../shared/baseUrl";
 
 function Menu(props) {
 
@@ -40,7 +41,7 @@ function Menu(props) {
                             <div key={dish.id} className="col-12 col-md-5 m-1">
                                 <Card>
                                     <Link style={{ color: "black" }} to={`/menu/${dish.id}`}>
-                                        <CardImg width="100%" src={dish.image} alt={dish.name} />
+                                        <CardImg width="100%" src={baseUrl + dish.image} alt={dish.name} />
                                         <CardImgOverlay>
                                             <CardTitle tag="h5">
                                                 {dish.name}

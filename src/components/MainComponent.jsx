@@ -11,7 +11,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
 import { connect } from "react-redux"; // to connect comp to the store
 
-import { addComment, fetchDishes } from "./../redux/ActionCreators";
+import { addComment, fetchDishes, fetchComments, fetchPromos } from "./../redux/ActionCreators";
 
 import { actions } from "react-redux-form";
 
@@ -27,14 +27,17 @@ const mapStateToProps = state => { // will be available as props for the main co
 const mapDispatchToProps = dispatch => ({
     addComment: (dishId, rating, author, comment) => { dispatch(addComment(dishId, rating, author, comment)) },
     fetchDishes: () => { dispatch(fetchDishes()) },
-    resetFeedbackForm: () => { dispatch(actions.reset("feedback")) } // empties the feedback only on reload or submit
+    resetFeedbackForm: () => { dispatch(actions.reset("feedback")) }, // empties the feedback only on reload or submit
     // the model will be passed
+    fetchComments: () => dispatch(fetchComments()),
+    fetchPromos: () => dispatch(fetchPromos())
 });
 
 function Main(props) {  /// all states will be available as props
     useEffect(() => { // directly after screen loaded
-        console.log("hello");
         props.fetchDishes();
+        props.fetchComments();
+        props.fetchPromos();
     }, []);
 
     const HomePage = () => {
@@ -44,7 +47,9 @@ function Main(props) {  /// all states will be available as props
                 dishesLoading={props.dishes.isLoading}
                 dishesErrMess={props.dishes.errMess}
                 leader={props.leaders.filter(l => l.featured === true)[0]}
-                promotion={props.promotions.filter(promo => promo.featured === true)[0]}
+                promotion={props.promotions.promotions.filter(promo => promo.featured === true)[0]}
+                promoLoading={props.promotions.isLoading}
+                promoErrMess={props.promotions.errMess}
             />
         );
     }
@@ -55,8 +60,9 @@ function Main(props) {  /// all states will be available as props
                 a_dish={props.dishes.dishes.filter(dish => dish.id === parseInt(match.params.dishId, 10))[0]}
                 isLoading={props.dishes.isLoading}
                 ErrMess={props.dishes.errMess}
-                cmnts={props.comments.filter(comment => comment.dishId === parseInt(match.params.dishId, 10))}
+                cmnts={props.comments.comments.filter(comment => comment.dishId === parseInt(match.params.dishId, 10))}
                 addComment={props.addComment}
+                commentsErrMess={props.comments.errMess}
             /> //base 10 int
         );
     }
