@@ -11,7 +11,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
 import { connect } from "react-redux"; // to connect comp to the store
 
-import { addComment, fetchDishes, fetchComments, fetchPromos } from "./../redux/ActionCreators";
+import { addComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders } from "./../redux/ActionCreators";
 
 import { actions } from "react-redux-form";
 
@@ -30,7 +30,8 @@ const mapDispatchToProps = dispatch => ({
     resetFeedbackForm: () => { dispatch(actions.reset("feedback")) }, // empties the feedback only on reload or submit
     // the model will be passed
     fetchComments: () => dispatch(fetchComments()),
-    fetchPromos: () => dispatch(fetchPromos())
+    fetchPromos: () => dispatch(fetchPromos()),
+    fetchLeaders: () => dispatch(fetchLeaders())
 });
 
 function Main(props) {  /// all states will be available as props
@@ -38,6 +39,7 @@ function Main(props) {  /// all states will be available as props
         props.fetchDishes();
         props.fetchComments();
         props.fetchPromos();
+        props.fetchLeaders();
     }, []);
 
     const HomePage = () => {
@@ -46,7 +48,7 @@ function Main(props) {  /// all states will be available as props
                 dish={props.dishes.dishes.filter(d => d.featured === true)[0]}  // d for one dish
                 dishesLoading={props.dishes.isLoading}
                 dishesErrMess={props.dishes.errMess}
-                leader={props.leaders.filter(l => l.featured === true)[0]}
+                leader={props.leaders.leaders.filter(l => l.featured === true)[0]}
                 promotion={props.promotions.promotions.filter(promo => promo.featured === true)[0]}
                 promoLoading={props.promotions.isLoading}
                 promoErrMess={props.promotions.errMess}
@@ -83,7 +85,7 @@ function Main(props) {  /// all states will be available as props
 
                 <Route path="/contactus" component={() => <Contact reset={props.resetFeedbackForm} />} />
 
-                <Route path="/aboutus" component={() => <About leaders={props.leaders} />} />
+                <Route path="/aboutus" component={() => <About leaders={props.leaders.leaders} />} />
 
                 <Redirect to="/home" /> {/* for default route redirect to home ===> should be last*/}
 

@@ -14,11 +14,11 @@ function Menu(props) {
                 </div>
             </div>
         );
-    } else if (props.dishz.ErrMess) {
+    } else if (props.dishz.errMess) {
         return (
             <div className="container">
                 <div className="row">
-                    <h4>{props.dishz.ErrMess}</h4>
+                    <h4>{props.dishz.errMess}</h4>
                 </div>
             </div>
         );

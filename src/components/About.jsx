@@ -1,12 +1,13 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { baseUrl } from '../shared/baseUrl';
 
 function RenderLeader(props) {
     return (
         <Media tag="li">
             <Media left middle>
-                <Media object src={props.image} alt="" />
+                <Media object src={baseUrl + props.image} alt="" />
             </Media>
             <Media body className="ml-5">
                 <Media heading tag="h3">
