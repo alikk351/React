@@ -11,7 +11,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
 import { connect } from "react-redux"; // to connect comp to the store
 
-import { postComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders } from "./../redux/ActionCreators";
+import { postComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders, postFeedback } from "./../redux/ActionCreators";
 
 import { actions } from "react-redux-form";
 
@@ -31,7 +31,10 @@ const mapDispatchToProps = dispatch => ({
     // the model will be passed
     fetchComments: () => dispatch(fetchComments()),
     fetchPromos: () => dispatch(fetchPromos()),
-    fetchLeaders: () => dispatch(fetchLeaders())
+    fetchLeaders: () => dispatch(fetchLeaders()),
+    postFeedback: (fname, lname, tel, email, agree, type, feedback) => {
+        dispatch(postFeedback(fname, lname, tel, email, agree, type, feedback))
+    }
 });
 
 function Main(props) {  /// all states will be available as props
@@ -83,7 +86,7 @@ function Main(props) {  /// all states will be available as props
 
                 <Route path="/menu/:dishId" component={DishWithId} />
 
-                <Route path="/contactus" component={() => <Contact reset={props.resetFeedbackForm} />} />
+                <Route path="/contactus" component={() => <Contact reset={props.resetFeedbackForm} postFeedback={props.postFeedback} />} />
 
                 <Route path="/aboutus" component={() => <About leaders={props.leaders.leaders} />} />
 

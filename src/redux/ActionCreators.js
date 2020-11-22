@@ -1,6 +1,7 @@
 import * as ActionTypes from "./ActionTypes";
-import DISHES from '../shared/dishes';
 import { baseUrl } from "./../shared/baseUrl";
+
+// adding a comment
 
 export const addComment = (comment) => ({
     type: ActionTypes.ADD_COMMENT,
@@ -42,6 +43,40 @@ export const postComment = (dishId, rating, author, comment) => (dispatch) => {
             alert('Your comment could not be posted\nError: ' + error.message);
         });
 }
+
+// adding a feedback
+
+export const addFeedback = (feedback) => ({
+    type: ActionTypes.ADD_FEEDBACK,
+    payload: feedback
+});
+
+export const postFeedback = (fname, lname, tel, email, agree, type, feedback) => (dispatch) => {
+    const newFeedback = { fname: fname, lname: lname, tel: tel, email: email, agree: agree, type: type, feedback: feedback };
+
+    return fetch(baseUrl + "feedback", {
+        method: "POST", body: JSON.stringify(newFeedback), headers: { "Content-Type": "application/json" }, credentials: "same-origin"
+    })
+        .then(response => {
+            if (response.ok) {
+                return response;
+            } else {
+                var error = new Error('Error ' + response.status + ': ' + response.statusText);
+                error.response = response;
+                throw error;
+            }
+        }, error => {
+            throw error;
+        })
+        .then(response => response.json())
+        .then(response => dispatch(addFeedback(response)))
+        .catch(error => {
+            console.log('post feedback', error.message);
+            alert('Your comment could not be posted\nError: ' + error.message);
+        });
+}
+
+//////////////////////////
 
 // dishes
 

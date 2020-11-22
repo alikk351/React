@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Breadcrumb, BreadcrumbItem, Button, Col, Label, Row } from "reactstrap";
-import { Control, actions,Form, Errors } from "react-redux-form";
+import { Control, actions, Form, Errors } from "react-redux-form";
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
@@ -11,7 +11,9 @@ const validEmail = (val) => /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(val
 
 function Contact(props) {
     function handleSubmit(values) {
-        console.log(values);
+        props.postFeedback(values.firstname, values.lastname, values.telnum, values.email, values.agree,
+            values.contactType, values.message);
+        alert(JSON.stringify(values));
         props.reset();
     }
 
