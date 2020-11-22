@@ -11,7 +11,7 @@ import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 
 import { connect } from "react-redux"; // to connect comp to the store
 
-import { addComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders } from "./../redux/ActionCreators";
+import { postComment, fetchDishes, fetchComments, fetchPromos, fetchLeaders } from "./../redux/ActionCreators";
 
 import { actions } from "react-redux-form";
 
@@ -25,7 +25,7 @@ const mapStateToProps = state => { // will be available as props for the main co
 };
 
 const mapDispatchToProps = dispatch => ({
-    addComment: (dishId, rating, author, comment) => { dispatch(addComment(dishId, rating, author, comment)) },
+    postComment: (dishId, rating, author, comment) => { dispatch(postComment(dishId, rating, author, comment)) },
     fetchDishes: () => { dispatch(fetchDishes()) },
     resetFeedbackForm: () => { dispatch(actions.reset("feedback")) }, // empties the feedback only on reload or submit
     // the model will be passed
@@ -63,7 +63,7 @@ function Main(props) {  /// all states will be available as props
                 isLoading={props.dishes.isLoading}
                 ErrMess={props.dishes.errMess}
                 cmnts={props.comments.comments.filter(comment => comment.dishId === parseInt(match.params.dishId, 10))}
-                addComment={props.addComment}
+                postComment={props.postComment}
                 commentsErrMess={props.comments.errMess}
             /> //base 10 int
         );

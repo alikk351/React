@@ -25,7 +25,7 @@ function CommentForm(props) {
                 <ModalBody>
                     <LocalForm onSubmit={values => {
                         setModal(false);
-                        props.addComment(props.dishId, values.rating, values.name, values.cmnt);
+                        props.postComment(props.dishId, values.rating, values.name, values.cmnt);
                     }}>
                         <div className="form-group">
                             <Label htmlFor="rating" tag="h6">Rating</Label>
@@ -75,7 +75,7 @@ function DishdetailComponent({ any_dish }) {   // use it in MERN-auth to display
     }
 }
 
-function RenderComments({ c, addComment, dishId }) {
+function RenderComments({ c, postComment, dishId }) {
     console.log("Render invoked");
     if (c === null) {
         return (<div></div>);
@@ -99,7 +99,7 @@ function RenderComments({ c, addComment, dishId }) {
                         );
                     })}
                 </ul>
-                <CommentForm dishId={dishId} addComment={addComment} />
+                <CommentForm dishId={dishId} postComment={postComment} />
             </div>
         );
     }
@@ -148,7 +148,7 @@ function DishDetail(props) {
                         <DishdetailComponent any_dish={props.a_dish} />
                     </div>
                     <div className="col-12 col-md-5 m-1">
-                        <RenderComments c={props.cmnts} addComment={props.addComment} dishId={props.a_dish.id} />
+                        <RenderComments c={props.cmnts} postComment={props.postComment} dishId={props.a_dish.id} />
                     </div>
                 </div>
             </div>
